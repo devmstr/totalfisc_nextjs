@@ -1,0 +1,697 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// TENANT & USER MANAGEMENT
+// ============================================================================
+
+model Tenant {
+  id            String   @id @default(cuid())
+  companyName   String
+  legalForm     String?  // SARL, EURL, SPA, etc.
+  fiscalYear    Int
+  startDate     DateTime
+  endDate       DateTime
+  
+  // Tax identifiers
+  nif           String?  @unique // Numéro d'Identification Fiscale
+  nis           String?  @unique // Numéro d'Identification Statistique
+  rc            String?  // Registre de Commerce
+  
+  // Company details
+  address       String?
+  city          String?
+  phone         String?
+  email         String?
+  logo          String?  // URL to logo
+  
+  // Settings
+  currency      String   @default("DZD")
+  language      String   @default("fr") // fr, ar
+  
+  // Relationships
+  users         User[]
+  journals      Journal[]
+  accounts      Account[]
+  auxiliaries   Auxiliary[]
+  transactions  TransactionLine[]
+  investments   Investment[]
+  costCenters   CostCenter[]
+  invoices      Invoice[]
+  products      Product[]
+  fiscalYears   FiscalYear[]
+  g50Declarations G50Declaration[]
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@index([fiscalYear])
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String
+  password        String    // Hashed with bcrypt
+  
+  // Permissions (MVP: single admin per tenant)
+  role            UserRole  @default(ADMIN)
+  
+  // Tenant access
+  tenantId        String
+  tenant          Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  // Activity tracking
+  lastLoginAt     DateTime?
+  lastActiveAt    DateTime?
+  
+  // Relationships
+  activityLogs    ActivityLog[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([tenantId])
+  @@index([email])
+}
+
+enum UserRole {
+  ADMIN
+  USER
+  VIEWER
+}
+
+// ============================================================================
+// FISCAL YEAR MANAGEMENT
+// ============================================================================
+
+model FiscalYear {
+  id              String    @id @default(cuid())
+  year            Int
+  startDate       DateTime
+  endDate         DateTime
+  
+  // Closure status
+  isClosed        Boolean   @default(false)
+  closedAt        DateTime?
+  closedByUserId  String?
+  
+  // Opening balance status
+  openingGenerated Boolean  @default(false)
+  
+  tenantId        String
+  tenant          Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  monthClosures   MonthClosure[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@unique([tenantId, year])
+  @@index([tenantId, isClosed])
+}
+
+model MonthClosure {
+  id              String     @id @default(cuid())
+  year            Int
+  month           Int        // 1-12
+  
+  isClosed        Boolean    @default(false)
+  closedAt        DateTime?
+  closedByUserId  String?
+  
+  fiscalYearId    String
+  fiscalYear      FiscalYear @relation(fields: [fiscalYearId], references: [id], onDelete: Cascade)
+  
+  tenantId        String
+  
+  createdAt       DateTime   @default(now())
+  
+  @@unique([fiscalYearId, month])
+  @@index([tenantId, year, month])
+}
+
+// ============================================================================
+// ACCOUNTING CORE
+// ============================================================================
+
+enum JournalNature {
+  ACHAT        // Purchase
+  VENTE        // Sale
+  TRESORERIE   // Treasury/Cash
+  OD           // Diverse Operations
+  BANQUE       // Bank
+  ANOUV        // A-Nouveau (Opening Balance)
+}
+
+model Journal {
+  id              String        @id @default(cuid())
+  code            String        // ACH, VT, BDL, CAIS, OD, etc.
+  label           String
+  nature          JournalNature
+  
+  // For treasury journals: principal account
+  principalAccount String?      // e.g., "530000" for CAISSE
+  
+  tenantId        String
+  tenant          Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  pieces          Piece[]
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@unique([tenantId, code])
+  @@index([tenantId, nature])
+}
+
+enum AccountType {
+  ASSET      // Class 1, 2, 3, 4 (debit), 5 (debit)
+  LIABILITY  // Class 1, 4 (credit), 5 (credit)
+  EQUITY     // Class 1 (credit)
+  REVENUE    // Class 7
+  EXPENSE    // Class 6
+}
+
+model Account {
+  id                    String       @id @default(cuid())
+  code                  String       // Max 14 characters (e.g., "512000")
+  label                 String
+  type                  AccountType
+  
+  // Auxiliary requirement
+  isAuxiliaryRequired   Boolean      @default(false)
+  
+  // SCF Classification
+  class                 Int          // 1-7 (Account class number)
+  
+  // Status
+  isActive              Boolean      @default(true)
+  
+  tenantId              String
+  tenant                Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  transactionLines      TransactionLine[]
+  
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  
+  @@unique([tenantId, code])
+  @@index([tenantId, class])
+  @@index([tenantId, isActive])
+}
+
+enum AuxiliaryType {
+  CLIENT      // Customer
+  FOURNISSEUR // Supplier
+  AUTRE       // Other
+}
+
+model Auxiliary {
+  id              String         @id @default(cuid())
+  code            String         // F001, CL001, etc.
+  label           String
+  type            AuxiliaryType
+  
+  // Contact details
+  taxId           String?        // NIF
+  nis             String?
+  rc              String?        // Registre de Commerce
+  address         String?
+  city            String?
+  phone         String?
+  email         String?
+  
+  // Banking
+  bankName        String?
+  accountNumber   String?
+  rib             String?        // Relevé d'Identité Bancaire
+  
+  // Status
+  isActive        Boolean        @default(true)
+  
+  tenantId        String
+  tenant          Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  transactionLines TransactionLine[]
+  invoices        Invoice[]
+  
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  
+  @@unique([tenantId, code])
+  @@index([tenantId, type])
+  @@index([tenantId, isActive])
+}
+
+model Piece {
+  id              String    @id @default(cuid())
+  pieceNumber     String    // 00001, 00002, etc. (unique within journal)
+  date            DateTime
+  reference       String?   // External document reference (FACT N°001, etc.)
+  
+  journalId       String
+  journal         Journal   @relation(fields: [journalId], references: [id], onDelete: Cascade)
+  
+  lines           TransactionLine[]
+  
+  // Status
+  isValidated     Boolean   @default(false)
+  validatedAt     DateTime?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@unique([journalId, pieceNumber])
+  @@index([journalId, date])
+  @@index([date])
+}
+
+model TransactionLine {
+  id              String     @id @default(cuid())
+  lineNumber      Int        // Order within piece (1, 2, 3...)
+  
+  // Piece relationship
+  pieceId         String
+  piece           Piece      @relation(fields: [pieceId], references: [id], onDelete: Cascade)
+  
+  // Account relationship
+  accountId       String
+  account         Account    @relation(fields: [accountId], references: [id])
+  
+  // Auxiliary relationship (optional)
+  auxiliaryId     String?
+  auxiliary       Auxiliary? @relation(fields: [auxiliaryId], references: [id])
+  
+  // Cost center (optional)
+  costCenterId    String?
+  costCenter      CostCenter? @relation(fields: [costCenterId], references: [id])
+  
+  // Transaction data
+  label           String     // Transaction description
+  debit           Decimal    @default(0) @db.Decimal(15, 2)
+  credit          Decimal    @default(0) @db.Decimal(15, 2)
+  
+  // Fiscal tags for Liasse Fiscale
+  isExportProduct           Boolean @default(false)
+  isDeductibleCharge        Boolean @default(false)
+  isNonDeductibleCharge     Boolean @default(false)
+  isFiscalDepreciation      Boolean @default(false)
+  isAccountingDepreciation  Boolean @default(false)
+  isInvestment              Boolean @default(false)
+  
+  // Reconciliation (Lettrage)
+  reconciliationCode        String?
+  isReconciled              Boolean @default(false)
+  reconciledAt              DateTime?
+  
+  tenantId        String
+  tenant          Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  
+  @@index([pieceId, lineNumber])
+  @@index([accountId])
+  @@index([auxiliaryId])
+  @@index([tenantId])
+  @@index([reconciliationCode])
+}
+
+// ============================================================================
+// INVESTMENT & DEPRECIATION
+// ============================================================================
+
+enum DepreciationMode {
+  LINEAR          // Linéaire
+  DECLINING       // Dégressif
+  NONE
+}
+
+enum DepreciationManagement {
+  AUTOMATIC
+  MANUAL
+}
+
+model Investment {
+  id                      String                  @id @default(cuid())
+  code                    String                  // Unique code
+  label                   String
+  description             String?
+  
+  // Financial
+  acquisitionDate         DateTime
+  acquisitionValue        Decimal                 @db.Decimal(15, 2)
+  residualValue           Decimal?                @db.Decimal(15, 2)
+  
+  // Accounting links
+  assetAccountId          String                  // Account 2xxxxx
+  depreciationAccountId   String?                 // Account 68xxxx
+  amortizationAccountId   String?                 // Account 28xxxx
+  
+  // Depreciation settings
+  depreciationMode        DepreciationMode
+  depreciationRate        Decimal                 @db.Decimal(5, 2) // Percentage
+  management              DepreciationManagement
+  usefulLife              Int?                    // Years
+  
+  // Status
+  isActive                Boolean                 @default(true)
+  disposalDate            DateTime?
+  
+  tenantId                String
+  tenant                  Tenant                  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  depreciations           Depreciation[]
+  
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  
+  @@unique([tenantId, code])
+  @@index([tenantId, isActive])
+}
+
+model Depreciation {
+  id              String     @id @default(cuid())
+  year            Int        // Fiscal year
+  amount          Decimal    @db.Decimal(15, 2)
+  
+  // Posting status
+  isPosted        Boolean    @default(false)
+  postedAt        DateTime?
+  
+  investmentId    String
+  investment      Investment @relation(fields: [investmentId], references: [id], onDelete: Cascade)
+  
+  // Link to generated accounting entry
+  pieceId         String?
+  
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  
+  @@unique([investmentId, year])
+  @@index([investmentId])
+  @@index([isPosted])
+}
+
+// ============================================================================
+// COST CENTERS (Analytic Accounting)
+// ============================================================================
+
+model CostCenter {
+  id              String            @id @default(cuid())
+  code            String
+  label           String
+  description     String?
+  isActive        Boolean           @default(true)
+  
+  tenantId        String
+  tenant          Tenant            @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  transactionLines TransactionLine[]
+  
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  @@unique([tenantId, code])
+  @@index([tenantId, isActive])
+}
+
+// ============================================================================
+// INVOICE MANAGEMENT
+// ============================================================================
+
+enum InvoiceStatus {
+  DRAFT          // Not finalized
+  FINALIZED      // Ready to send
+  SENT           // Sent to customer
+  PARTIALLY_PAID // Partial payment
+  PAID           // Fully paid
+  OVERDUE        // Past due date
+  CANCELLED      // Voided
+}
+
+enum InvoiceType {
+  INVOICE        // Standard invoice (Facture)
+  PROFORMA       // Proforma invoice
+  QUOTE          // Quote/Devis
+  CREDIT_NOTE    // Credit note (Avoir)
+}
+
+enum DiscountType {
+  FIXED          // Fixed amount in DZD
+  PERCENTAGE     // Percentage of subtotal
+}
+
+model Invoice {
+  id              String       @id @default(cuid())
+  invoiceNumber   String       // Auto-generated: INV-2026-001
+  status          InvoiceStatus @default(DRAFT)
+  
+  // Dates
+  issueDate       DateTime
+  dueDate         DateTime
+  
+  // Customer info (cached for historical accuracy)
+  customerId      String
+  customer        Auxiliary    @relation(fields: [customerId], references: [id])
+  customerName    String       // Snapshot
+  customerAddress String?
+  customerTaxId   String?
+  customerRib     String?
+  
+  // Financial
+  subtotal        Decimal      @db.Decimal(15, 2)
+  taxRate         Decimal      @db.Decimal(5, 2) @default(19.00)
+  taxAmount       Decimal      @db.Decimal(15, 2)
+  
+  // Discount
+  discountType    DiscountType @default(FIXED)
+  discountValue   Decimal      @default(0) @db.Decimal(15, 2)
+  discountAmount  Decimal      @default(0) @db.Decimal(15, 2)
+  
+  // Timbre Fiscal (Stamp Duty)
+  timbreFiscal    Decimal      @default(0) @db.Decimal(15, 2)
+  isTimbreExempt  Boolean      @default(false)
+  
+  totalAmount     Decimal      @db.Decimal(15, 2)
+  currency        String       @default("DZD")
+  
+  // Items
+  items           InvoiceItem[]
+  
+  // Branding
+  logo            String?
+  customMessage   String?
+  footerText      String?
+  
+  // Tracking
+  finalizedAt     DateTime?
+  sentAt          DateTime?
+  paidAt          DateTime?
+  
+  // Payment
+  paymentMethod   String?
+  paymentReference String?
+  
+  // Linked accounting entry
+  pieceId         String?
+  
+  tenantId        String
+  tenant          Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  @@unique([tenantId, invoiceNumber])
+  @@index([customerId, status])
+  @@index([tenantId, status])
+  @@index([dueDate])
+}
+
+model InvoiceItem {
+  id              String   @id @default(cuid())
+  invoiceId       String
+  invoice         Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  
+  lineNumber      Int
+  description     String
+  quantity        Decimal  @db.Decimal(10, 2)
+  unitPrice       Decimal  @db.Decimal(15, 2)
+  taxRate         Decimal  @db.Decimal(5, 2)
+  amount          Decimal  @db.Decimal(15, 2)
+  
+  // Optional: Link to product catalog
+  productId       String?
+  product         Product? @relation(fields: [productId], references: [id])
+  
+  // Revenue account (e.g., 700000)
+  accountCode     String?
+  
+  createdAt       DateTime @default(now())
+  
+  @@index([invoiceId, lineNumber])
+}
+
+model Product {
+  id              String        @id @default(cuid())
+  code            String
+  name            String
+  description     String?
+  unitPrice       Decimal       @db.Decimal(15, 2)
+  taxRate         Decimal       @db.Decimal(5, 2) @default(19.00)
+  
+  // Default revenue account
+  accountCode     String        // 700000, 706000, etc.
+  
+  category        String?
+  isActive        Boolean       @default(true)
+  
+  tenantId        String
+  tenant          Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  invoiceItems    InvoiceItem[]
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@unique([tenantId, code])
+  @@index([tenantId, isActive])
+}
+
+// ============================================================================
+// G50 REPORT (TVA DECLARATION)
+// ============================================================================
+
+model G50Declaration {
+  id              String       @id @default(cuid())
+  
+  // Period
+  year            Int
+  month           Int
+  status          G50Status    @default(DRAFT)
+  
+  // TVA Section
+  grossSales      Decimal      @db.Decimal(15, 2)
+  exemptions      Decimal      @db.Decimal(15, 2)
+  taxableTurnover Decimal      @db.Decimal(15, 2)
+  vatCollected    Decimal      @db.Decimal(15, 2)
+  
+  // Deductible
+  vatOnAssets     Decimal      @db.Decimal(15, 2)
+  vatOnGoods      Decimal      @db.Decimal(15, 2)
+  totalVatDeductible Decimal   @db.Decimal(15, 2)
+  
+  // Adjustments
+  previousCredit  Decimal      @db.Decimal(15, 2)
+  
+  // Results
+  totalDeductions Decimal      @db.Decimal(15, 2)
+  vatToPay        Decimal      @db.Decimal(15, 2)
+  vatCredit       Decimal      @db.Decimal(15, 2)
+  
+  // Other taxes
+  ibsAdvance      Decimal      @default(0) @db.Decimal(15, 2)
+  irgSalaries     Decimal      @default(0) @db.Decimal(15, 2)
+  stampDuties     Decimal      @default(0) @db.Decimal(15, 2)
+  
+  totalAmount     Decimal      @db.Decimal(15, 2)
+  
+  suppliers       G50SupplierDetail[]
+  
+  tenantId        String
+  tenant          Tenant       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  @@unique([tenantId, year, month])
+}
+
+enum G50Status {
+  DRAFT
+  VALIDATED
+  SUBMITTED
+  PAID
+}
+
+model G50SupplierDetail {
+  id              String       @id @default(cuid())
+  declarationId   String
+  declaration     G50Declaration @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+  
+  // Supplier info
+  supplierNif     String
+  supplierRc      String?
+  supplierName    String
+  
+  // Verification
+  nifVerified     Boolean      @default(false)
+  
+  // Invoice
+  invoiceNumber   String
+  invoiceDate     DateTime
+  amountHT        Decimal      @db.Decimal(15, 2)
+  vatAmount       Decimal      @db.Decimal(15, 2)
+  amountTTC       Decimal      @db.Decimal(15, 2)
+}
+
+// ============================================================================
+// ACTIVITY LOGGING
+// ============================================================================
+
+enum ActivityType {
+  PIECE_CREATED
+  PIECE_UPDATED
+  PIECE_DELETED
+  INVOICE_CREATED
+  INVOICE_SENT
+  INVOICE_PAID
+  MONTH_CLOSED
+  ACCOUNT_CREATED
+  USER_LOGIN
+}
+
+model ActivityLog {
+  id              String       @id @default(cuid())
+  type            ActivityType
+  description     String
+  
+  userId          String
+  user            User         @relation(fields: [userId], references: [id])
+  
+  entityType      String?
+  entityId        String?
+  metadata        Json?
+  ipAddress       String?
+  userAgent       String?
+  
+  tenantId        String
+  
+  createdAt       DateTime     @default(now())
+  
+  @@index([tenantId, createdAt])
+  @@index([userId])
+  @@index([entityType, entityId])
+}
+
+// ============================================================================
+// SYSTEM SETTINGS
+// ============================================================================
+
+model SystemSetting {
+  id              String   @id @default(cuid())
+  key             String   @unique
+  value           String   @db.Text
+  description     String?
+  
+  updatedAt       DateTime @updatedAt
+}

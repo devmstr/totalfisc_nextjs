@@ -1,0 +1,95 @@
+{
+  "common": {
+    "appName": "توتال فيسك",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "search": "بحث",
+    "filter": "تصفية",
+    "export": "تصدير",
+    "print": "طباعة",
+    "yes": "نعم",
+    "no": "لا",
+    "noData": "لا توجد بيانات"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "loginButton": "دخول",
+    "invalidCredentials": "بيانات الاعتماد غير صالحة"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "welcome": "مرحباً، {name}",
+    "revenue": "رقم الأعمال",
+    "expenses": "المصاريف",
+    "vatToPay": "ضريبة القيمة المضافة المستحقة",
+    "netResult": "الربح الصافي",
+    "recentActivity": "الأنشطة الأخيرة",
+    "noRecentActivity": "لا توجد أنشطة حديثة.",
+    "shortcuts": "اختصارات",
+    "newInvoice": "فاتورة جديدة",
+    "newEntry": "إدخال قيد",
+    "viewBalance": "عرض الميزانية",
+    "generateG50": "إنشاء تقرير G50"
+  },
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "accounting": "المحاسبة",
+    "journals": "اليوميات",
+    "accounts": "دليل الحسابات",
+    "auxiliaries": "الأطراف الثالثة",
+    "invoicing": "الفواتير",
+    "invoices": "الفواتير",
+    "products": "المنتجات",
+    "reports": "التقارير",
+    "balance": "الميزانية",
+    "generalLedger": "دفتر الأستاذ العام",
+    "fiscal": "الملف الضريبي",
+    "settings": "الإعدادات"
+  },
+  "accounting": {
+    "journal": "يومية",
+    "account": "حساب",
+    "debit": "مدين",
+    "credit": "دائن",
+    "date": "التاريخ",
+    "reference": "المرجع",
+    "label": "البيان",
+    "amount": "المبلغ",
+    "piece": "المستند",
+    "auxiliary": "الطرف الثالث",
+    "balanceError": "مجموع المدين يجب أن يساوي مجموع الدائن"
+  },
+  "invoicing": {
+    "invoice": "فاتورة",
+    "invoiceNumber": "رقم الفاتورة",
+    "client": "العميل",
+    "supplier": "المورد",
+    "issueDate": "تاريخ الإصدار",
+    "dueDate": "تاريخ الاستحقاق",
+    "subtotal": "المجموع الفرعي",
+    "vat": "ضريبة القيمة المضافة",
+    "stampDuty": "رسم الطابع",
+    "total": "المجموع الكلي",
+    "status": {
+      "draft": "مسودة",
+      "sent": "مُرسلة",
+      "paid": "مدفوعة",
+      "cancelled": "ملغاة"
+    }
+  },
+  "settings": {
+    "company": "الشركة",
+    "fiscalYear": "السنة المالية",
+    "users": "المستخدمون",
+    "language": "اللغة",
+    "theme": "المظهر"
+  }
+}

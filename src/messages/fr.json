@@ -1,0 +1,95 @@
+{
+  "common": {
+    "appName": "TOTALFisc",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "export": "Exporter",
+    "print": "Imprimer",
+    "yes": "Oui",
+    "no": "Non",
+    "noData": "Aucune donnée disponible"
+  },
+  "auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "email": "Email",
+    "password": "Mot de passe",
+    "loginButton": "Se connecter",
+    "invalidCredentials": "Identifiants invalides"
+  },
+  "dashboard": {
+    "title": "Tableau de Bord",
+    "welcome": "Bienvenue, {name}",
+    "revenue": "Chiffre d'Affaires",
+    "expenses": "Charges",
+    "vatToPay": "TVA à Payer",
+    "netResult": "Résultat Net",
+    "recentActivity": "Activités Récentes",
+    "noRecentActivity": "Aucune activité récente.",
+    "shortcuts": "Raccourcis",
+    "newInvoice": "Nouvelle Facture",
+    "newEntry": "Saisir une Écriture",
+    "viewBalance": "Consulter la Balance",
+    "generateG50": "Générer un G50"
+  },
+  "navigation": {
+    "dashboard": "Tableau de Bord",
+    "accounting": "Comptabilité",
+    "journals": "Journaux",
+    "accounts": "Plan Comptable",
+    "auxiliaries": "Tiers",
+    "invoicing": "Facturation",
+    "invoices": "Factures",
+    "products": "Produits",
+    "reports": "Rapports",
+    "balance": "Balance",
+    "generalLedger": "Grand Livre",
+    "fiscal": "Liasse Fiscale",
+    "settings": "Paramètres"
+  },
+  "accounting": {
+    "journal": "Journal",
+    "account": "Compte",
+    "debit": "Débit",
+    "credit": "Crédit",
+    "date": "Date",
+    "reference": "Référence",
+    "label": "Libellé",
+    "amount": "Montant",
+    "piece": "Pièce",
+    "auxiliary": "Tiers",
+    "balanceError": "Le total des débits doit être égal au total des crédits"
+  },
+  "invoicing": {
+    "invoice": "Facture",
+    "invoiceNumber": "Numéro de Facture",
+    "client": "Client",
+    "supplier": "Fournisseur",
+    "issueDate": "Date d'Émission",
+    "dueDate": "Date d'Échéance",
+    "subtotal": "Sous-total HT",
+    "vat": "TVA",
+    "stampDuty": "Timbre Fiscal",
+    "total": "Total TTC",
+    "status": {
+      "draft": "Brouillon",
+      "sent": "Envoyée",
+      "paid": "Payée",
+      "cancelled": "Annulée"
+    }
+  },
+  "settings": {
+    "company": "Entreprise",
+    "fiscalYear": "Exercice Fiscal",
+    "users": "Utilisateurs",
+    "language": "Langue",
+    "theme": "Thème"
+  }
+}

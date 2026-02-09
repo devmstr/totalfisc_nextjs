@@ -23,14 +23,14 @@ export function TenantSwitcher() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full sm:w-64 justify-between bg-slate-50 border-slate-200 hover:bg-slate-100 text-slate-700 h-auto py-2 px-3 rounded-xl transition-all"
+          className="w-full sm:w-64 justify-between bg-card border-border hover:bg-slate-50 dark:hover:bg-zinc-800 text-foreground h-auto py-2 px-3 rounded-xl transition-all"
         >
           <div className="flex items-center gap-3 min-w-0">
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 shrink-0">
               <DynamicIcon name="Building2" className="w-4 h-4" />
             </div>
             <div className="flex flex-col items-start min-w-0">
-              <span className="truncate text-sm font-bold text-slate-900 leading-none mb-1">
+              <span className="truncate text-sm font-bold text-foreground leading-none mb-1">
                 {currentTenant?.companyName || 'Choisir...'}
               </span>
               <span className="text-[10px] text-slate-500 flex items-center gap-1 font-medium">
@@ -39,11 +39,14 @@ export function TenantSwitcher() {
               </span>
             </div>
           </div>
-          <DynamicIcon name="ChevronsUpDown" className="ml-2 h-4 w-4 shrink-0 text-slate-400" />
+          <DynamicIcon
+            name="ChevronsUpDown"
+            className="ml-2 h-4 w-4 shrink-0 text-slate-400"
+          />
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-70 p-2 bg-white border-slate-200 shadow-2xl rounded-xl"
+        className="w-70 p-2 bg-card border-border shadow-2xl rounded-xl"
         align="start"
       >
         <div className="text-[10px] uppercase font-bold text-slate-400 px-2 py-1.5 tracking-wider">
@@ -60,16 +63,16 @@ export function TenantSwitcher() {
               className={cn(
                 'w-full flex items-center gap-3 p-2 rounded-lg text-sm transition-all group',
                 currentTenant?.id === tenant.id
-                  ? 'bg-emerald-50 text-emerald-600 border border-emerald-100'
-                  : 'text-slate-600 hover:bg-slate-50 border border-transparent'
+                  ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-500/20'
+                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-zinc-800 border border-transparent'
               )}
             >
               <div
                 className={cn(
                   'w-8 h-8 rounded-md flex items-center justify-center border shrink-0',
                   currentTenant?.id === tenant.id
-                    ? 'bg-emerald-100 border-emerald-200 text-emerald-600'
-                    : 'bg-slate-50 border-slate-100 text-slate-400 group-hover:text-slate-600'
+                    ? 'bg-emerald-100 dark:bg-emerald-500/20 border-emerald-200 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400'
+                    : 'bg-slate-50 dark:bg-zinc-800 border-slate-100 dark:border-zinc-700 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                 )}
               >
                 <DynamicIcon name="Building2" className="w-4 h-4" />
@@ -83,13 +86,16 @@ export function TenantSwitcher() {
                 </span>
               </div>
               {currentTenant?.id === tenant.id && (
-                <DynamicIcon name="Check" className="h-4 w-4 text-emerald-500" />
+                <DynamicIcon
+                  name="Check"
+                  className="h-4 w-4 text-emerald-500"
+                />
               )}
             </button>
           ))}
         </div>
 
-        <div className="mt-2 pt-2 border-t border-slate-100">
+        <div className="mt-2 pt-2 border-t border-slate-100 dark:border-zinc-800">
           <Button
             variant="ghost"
             className="w-full justify-start text-xs h-9 text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg gap-2"

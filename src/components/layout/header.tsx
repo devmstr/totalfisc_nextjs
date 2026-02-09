@@ -3,6 +3,7 @@
 import { Bell, Search, User, LogOut, ChevronDown, Settings } from 'lucide-react'
 import { DynamicIcon } from '@/components/ui/icons'
 import LanguageSwitcher from '@/components/ui/language-switcher'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -19,7 +20,7 @@ export function Header() {
   const { data: session } = useSession()
 
   return (
-    <header className="h-16 sticky top-0 z-30 flex items-center justify-between px-6 bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <header className="h-16 sticky top-0 z-30 flex items-center justify-between px-6 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="flex items-center gap-4">
         <TenantSwitcher />
 
@@ -28,7 +29,10 @@ export function Header() {
         {/* Search Bar - Visual only for now */}
         <div className="hidden md:flex flex-1 max-w-md">
           <div className="relative w-full group">
-            <DynamicIcon name="Search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
+            <DynamicIcon
+              name="Search"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors"
+            />
             <input
               type="text"
               placeholder="Rechercher une facture, un client..."
@@ -39,6 +43,7 @@ export function Header() {
       </div>
 
       <div className="flex items-center gap-2 md:gap-4 ml-auto lg:ml-0">
+        <ThemeToggle />
         <LanguageSwitcher />
 
         {/* Notifications */}
@@ -71,7 +76,10 @@ export function Header() {
                   {session?.user?.role || 'Administrateur'}
                 </span>
               </div>
-              <DynamicIcon name="ChevronDown" className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
+              <DynamicIcon
+                name="ChevronDown"
+                className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors"
+              />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent

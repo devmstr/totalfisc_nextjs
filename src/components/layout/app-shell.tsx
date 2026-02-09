@@ -26,7 +26,7 @@ export function AppShell({ children }: AppShellProps) {
 
   return (
     <div
-      className="min-h-screen bg-slate-50 overflow-x-hidden"
+      className="min-h-screen bg-background overflow-x-hidden"
       dir={isRtl ? 'rtl' : 'ltr'}
     >
       {/* Sidebar Component */}
@@ -41,7 +41,7 @@ export function AppShell({ children }: AppShellProps) {
       >
         <Button
           onClick={() => setIsSidebarOpen(true)}
-          className="h-14 w-14 rounded-full shadow-2xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center border-4 border-white"
+          className="h-14 w-14 rounded-full shadow-2xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center border-4 border-white dark:border-zinc-900"
         >
           <Menu className="w-6 h-6" />
         </Button>
@@ -62,7 +62,7 @@ export function AppShell({ children }: AppShellProps) {
         </main>
 
         {/* Footer info - Senior touch */}
-        <footer className="px-8 py-6 border-t border-slate-200 text-slate-400 text-xs flex flex-col sm:flex-row justify-between items-center gap-4">
+        <footer className="px-8 py-6 border-t border-border text-slate-400 text-xs flex flex-col sm:flex-row justify-between items-center gap-4">
           <p>
             © 2026 TOTALFisc. Tous droits réservés. Conforme au SCF Algérien.
           </p>

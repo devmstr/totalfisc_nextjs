@@ -1,6 +1,7 @@
 'use client'
 
 import { Bell, Search, User, LogOut, ChevronDown, Settings } from 'lucide-react'
+import { DynamicIcon } from '@/components/ui/icons'
 import LanguageSwitcher from '@/components/ui/language-switcher'
 import { Button } from '@/components/ui/button'
 import {
@@ -12,21 +13,28 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { useSession, signOut } from 'next-auth/react'
+import { TenantSwitcher } from './tenant-switcher'
 
 export function Header() {
   const { data: session } = useSession()
 
   return (
     <header className="h-16 sticky top-0 z-30 flex items-center justify-between px-6 bg-white/80 backdrop-blur-md border-b border-slate-200">
-      {/* Search Bar - Visual only for now */}
-      <div className="hidden md:flex flex-1 max-w-md ml-8 lg:ml-0">
-        <div className="relative w-full group">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
-          <input
-            type="text"
-            placeholder="Rechercher une facture, un client..."
-            className="w-full h-10 pl-10 pr-4 bg-slate-100/50 border-transparent focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50 rounded-xl text-sm transition-all outline-none"
-          />
+      <div className="flex items-center gap-4">
+        <TenantSwitcher />
+
+        <div className="h-8 w-px bg-slate-200 mx-2 hidden md:block"></div>
+
+        {/* Search Bar - Visual only for now */}
+        <div className="hidden md:flex flex-1 max-w-md">
+          <div className="relative w-full group">
+            <DynamicIcon name="Search" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
+            <input
+              type="text"
+              placeholder="Rechercher une facture, un client..."
+              className="w-full h-10 pl-10 pr-4 bg-slate-100/50 border-transparent focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50 rounded-xl text-sm transition-all outline-none"
+            />
+          </div>
         </div>
       </div>
 
@@ -39,7 +47,7 @@ export function Header() {
           size="icon"
           className="relative text-slate-500 hover:text-emerald-600 rounded-full h-9 w-9"
         >
-          <Bell className="w-5 h-5" />
+          <DynamicIcon name="Bell" className="w-5 h-5" />
           <span className="absolute top-2 right-2 w-2 h-2 bg-emerald-500 rounded-full border-2 border-white"></span>
         </Button>
 
@@ -63,7 +71,7 @@ export function Header() {
                   {session?.user?.role || 'Administrateur'}
                 </span>
               </div>
-              <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
+              <DynamicIcon name="ChevronDown" className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -82,11 +90,11 @@ export function Header() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="rounded-lg p-2.5 cursor-pointer">
-              <User className="mr-2 h-4 w-4" />
+              <DynamicIcon name="User" className="mr-2 h-4 w-4" />
               <span>Profil</span>
             </DropdownMenuItem>
             <DropdownMenuItem className="rounded-lg p-2.5 cursor-pointer">
-              <Settings className="mr-2 h-4 w-4" />
+              <DynamicIcon name="Settings" className="mr-2 h-4 w-4" />
               <span>Réglages</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -94,7 +102,7 @@ export function Header() {
               className="rounded-lg p-2.5 cursor-pointer text-red-600 focus:text-red-600 focus:bg-red-50"
               onClick={() => signOut()}
             >
-              <LogOut className="mr-2 h-4 w-4" />
+              <DynamicIcon name="LogOut" className="mr-2 h-4 w-4" />
               <span>Déconnexion</span>
             </DropdownMenuItem>
           </DropdownMenuContent>

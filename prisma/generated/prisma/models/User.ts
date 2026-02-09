@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  failedLoginAttempts: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  failedLoginAttempts: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -31,7 +41,14 @@ export type UserMinAggregateOutputType = {
   password: string | null
   role: $Enums.UserRole | null
   tenantId: string | null
+  isActive: boolean | null
+  failedLoginAttempts: number | null
+  lockedUntil: Date | null
+  lastFailedLoginAt: Date | null
+  passwordChangedAt: Date | null
+  mustChangePassword: boolean | null
   lastLoginAt: Date | null
+  lastLoginIp: string | null
   lastActiveAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -44,7 +61,14 @@ export type UserMaxAggregateOutputType = {
   password: string | null
   role: $Enums.UserRole | null
   tenantId: string | null
+  isActive: boolean | null
+  failedLoginAttempts: number | null
+  lockedUntil: Date | null
+  lastFailedLoginAt: Date | null
+  passwordChangedAt: Date | null
+  mustChangePassword: boolean | null
   lastLoginAt: Date | null
+  lastLoginIp: string | null
   lastActiveAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -57,13 +81,28 @@ export type UserCountAggregateOutputType = {
   password: number
   role: number
   tenantId: number
+  isActive: number
+  failedLoginAttempts: number
+  lockedUntil: number
+  lastFailedLoginAt: number
+  passwordChangedAt: number
+  mustChangePassword: number
   lastLoginAt: number
+  lastLoginIp: number
   lastActiveAt: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  failedLoginAttempts?: true
+}
+
+export type UserSumAggregateInputType = {
+  failedLoginAttempts?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -72,7 +111,14 @@ export type UserMinAggregateInputType = {
   password?: true
   role?: true
   tenantId?: true
+  isActive?: true
+  failedLoginAttempts?: true
+  lockedUntil?: true
+  lastFailedLoginAt?: true
+  passwordChangedAt?: true
+  mustChangePassword?: true
   lastLoginAt?: true
+  lastLoginIp?: true
   lastActiveAt?: true
   createdAt?: true
   updatedAt?: true
@@ -85,7 +131,14 @@ export type UserMaxAggregateInputType = {
   password?: true
   role?: true
   tenantId?: true
+  isActive?: true
+  failedLoginAttempts?: true
+  lockedUntil?: true
+  lastFailedLoginAt?: true
+  passwordChangedAt?: true
+  mustChangePassword?: true
   lastLoginAt?: true
+  lastLoginIp?: true
   lastActiveAt?: true
   createdAt?: true
   updatedAt?: true
@@ -98,7 +151,14 @@ export type UserCountAggregateInputType = {
   password?: true
   role?: true
   tenantId?: true
+  isActive?: true
+  failedLoginAttempts?: true
+  lockedUntil?: true
+  lastFailedLoginAt?: true
+  passwordChangedAt?: true
+  mustChangePassword?: true
   lastLoginAt?: true
+  lastLoginIp?: true
   lastActiveAt?: true
   createdAt?: true
   updatedAt?: true
@@ -143,6 +203,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -173,6 +245,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -184,11 +258,20 @@ export type UserGroupByOutputType = {
   password: string
   role: $Enums.UserRole
   tenantId: string
+  isActive: boolean
+  failedLoginAttempts: number
+  lockedUntil: Date | null
+  lastFailedLoginAt: Date | null
+  passwordChangedAt: Date
+  mustChangePassword: boolean
   lastLoginAt: Date | null
+  lastLoginIp: string | null
   lastActiveAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -218,7 +301,14 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   tenantId?: Prisma.StringFilter<"User"> | string
+  isActive?: Prisma.BoolFilter<"User"> | boolean
+  failedLoginAttempts?: Prisma.IntFilter<"User"> | number
+  lockedUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  lastFailedLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  mustChangePassword?: Prisma.BoolFilter<"User"> | boolean
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  lastLoginIp?: Prisma.StringNullableFilter<"User"> | string | null
   lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -233,7 +323,14 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  failedLoginAttempts?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastFailedLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
+  mustChangePassword?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastLoginIp?: Prisma.SortOrderInput | Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -251,7 +348,14 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   tenantId?: Prisma.StringFilter<"User"> | string
+  isActive?: Prisma.BoolFilter<"User"> | boolean
+  failedLoginAttempts?: Prisma.IntFilter<"User"> | number
+  lockedUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  lastFailedLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  mustChangePassword?: Prisma.BoolFilter<"User"> | boolean
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  lastLoginIp?: Prisma.StringNullableFilter<"User"> | string | null
   lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -266,13 +370,22 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  failedLoginAttempts?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastFailedLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
+  mustChangePassword?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastLoginIp?: Prisma.SortOrderInput | Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -285,7 +398,14 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   tenantId?: Prisma.StringWithAggregatesFilter<"User"> | string
+  isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  failedLoginAttempts?: Prisma.IntWithAggregatesFilter<"User"> | number
+  lockedUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  lastFailedLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  mustChangePassword?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  lastLoginIp?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   lastActiveAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -297,7 +417,14 @@ export type UserCreateInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastFailedLoginAt?: Date | string | null
+  passwordChangedAt?: Date | string
+  mustChangePassword?: boolean
   lastLoginAt?: Date | string | null
+  lastLoginIp?: string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -312,7 +439,14 @@ export type UserUncheckedCreateInput = {
   password: string
   role?: $Enums.UserRole
   tenantId: string
+  isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastFailedLoginAt?: Date | string | null
+  passwordChangedAt?: Date | string
+  mustChangePassword?: boolean
   lastLoginAt?: Date | string | null
+  lastLoginIp?: string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -325,7 +459,14 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastFailedLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -340,7 +481,14 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastFailedLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -354,7 +502,14 @@ export type UserCreateManyInput = {
   password: string
   role?: $Enums.UserRole
   tenantId: string
+  isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastFailedLoginAt?: Date | string | null
+  passwordChangedAt?: Date | string
+  mustChangePassword?: boolean
   lastLoginAt?: Date | string | null
+  lastLoginIp?: string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -366,7 +521,14 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastFailedLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -379,7 +541,14 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastFailedLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -402,10 +571,21 @@ export type UserCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  failedLoginAttempts?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
+  lastFailedLoginAt?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
+  mustChangePassword?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  lastLoginIp?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  failedLoginAttempts?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -415,7 +595,14 @@ export type UserMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  failedLoginAttempts?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
+  lastFailedLoginAt?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
+  mustChangePassword?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  lastLoginIp?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -428,10 +615,21 @@ export type UserMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   tenantId?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  failedLoginAttempts?: Prisma.SortOrder
+  lockedUntil?: Prisma.SortOrder
+  lastFailedLoginAt?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
+  mustChangePassword?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  lastLoginIp?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  failedLoginAttempts?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -485,6 +683,10 @@ export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
@@ -509,7 +711,14 @@ export type UserCreateWithoutTenantInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastFailedLoginAt?: Date | string | null
+  passwordChangedAt?: Date | string
+  mustChangePassword?: boolean
   lastLoginAt?: Date | string | null
+  lastLoginIp?: string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -522,7 +731,14 @@ export type UserUncheckedCreateWithoutTenantInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastFailedLoginAt?: Date | string | null
+  passwordChangedAt?: Date | string
+  mustChangePassword?: boolean
   lastLoginAt?: Date | string | null
+  lastLoginIp?: string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -565,7 +781,14 @@ export type UserScalarWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   tenantId?: Prisma.StringFilter<"User"> | string
+  isActive?: Prisma.BoolFilter<"User"> | boolean
+  failedLoginAttempts?: Prisma.IntFilter<"User"> | number
+  lockedUntil?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  lastFailedLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  mustChangePassword?: Prisma.BoolFilter<"User"> | boolean
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  lastLoginIp?: Prisma.StringNullableFilter<"User"> | string | null
   lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -577,7 +800,14 @@ export type UserCreateWithoutActivityLogsInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastFailedLoginAt?: Date | string | null
+  passwordChangedAt?: Date | string
+  mustChangePassword?: boolean
   lastLoginAt?: Date | string | null
+  lastLoginIp?: string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -591,7 +821,14 @@ export type UserUncheckedCreateWithoutActivityLogsInput = {
   password: string
   role?: $Enums.UserRole
   tenantId: string
+  isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastFailedLoginAt?: Date | string | null
+  passwordChangedAt?: Date | string
+  mustChangePassword?: boolean
   lastLoginAt?: Date | string | null
+  lastLoginIp?: string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -619,7 +856,14 @@ export type UserUpdateWithoutActivityLogsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastFailedLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -633,7 +877,14 @@ export type UserUncheckedUpdateWithoutActivityLogsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastFailedLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -645,7 +896,14 @@ export type UserCreateManyTenantInput = {
   name: string
   password: string
   role?: $Enums.UserRole
+  isActive?: boolean
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastFailedLoginAt?: Date | string | null
+  passwordChangedAt?: Date | string
+  mustChangePassword?: boolean
   lastLoginAt?: Date | string | null
+  lastLoginIp?: string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -657,7 +915,14 @@ export type UserUpdateWithoutTenantInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastFailedLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -670,7 +935,14 @@ export type UserUncheckedUpdateWithoutTenantInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastFailedLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -683,7 +955,14 @@ export type UserUncheckedUpdateManyWithoutTenantInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastFailedLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordChangedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -727,7 +1006,14 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   role?: boolean
   tenantId?: boolean
+  isActive?: boolean
+  failedLoginAttempts?: boolean
+  lockedUntil?: boolean
+  lastFailedLoginAt?: boolean
+  passwordChangedAt?: boolean
+  mustChangePassword?: boolean
   lastLoginAt?: boolean
+  lastLoginIp?: boolean
   lastActiveAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -743,7 +1029,14 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   role?: boolean
   tenantId?: boolean
+  isActive?: boolean
+  failedLoginAttempts?: boolean
+  lockedUntil?: boolean
+  lastFailedLoginAt?: boolean
+  passwordChangedAt?: boolean
+  mustChangePassword?: boolean
   lastLoginAt?: boolean
+  lastLoginIp?: boolean
   lastActiveAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -757,7 +1050,14 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   role?: boolean
   tenantId?: boolean
+  isActive?: boolean
+  failedLoginAttempts?: boolean
+  lockedUntil?: boolean
+  lastFailedLoginAt?: boolean
+  passwordChangedAt?: boolean
+  mustChangePassword?: boolean
   lastLoginAt?: boolean
+  lastLoginIp?: boolean
   lastActiveAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -771,13 +1071,20 @@ export type UserSelectScalar = {
   password?: boolean
   role?: boolean
   tenantId?: boolean
+  isActive?: boolean
+  failedLoginAttempts?: boolean
+  lockedUntil?: boolean
+  lastFailedLoginAt?: boolean
+  passwordChangedAt?: boolean
+  mustChangePassword?: boolean
   lastLoginAt?: boolean
+  lastLoginIp?: boolean
   lastActiveAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "tenantId" | "lastLoginAt" | "lastActiveAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "tenantId" | "isActive" | "failedLoginAttempts" | "lockedUntil" | "lastFailedLoginAt" | "passwordChangedAt" | "mustChangePassword" | "lastLoginAt" | "lastLoginIp" | "lastActiveAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   activityLogs?: boolean | Prisma.User$activityLogsArgs<ExtArgs>
@@ -803,7 +1110,14 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     role: $Enums.UserRole
     tenantId: string
+    isActive: boolean
+    failedLoginAttempts: number
+    lockedUntil: Date | null
+    lastFailedLoginAt: Date | null
+    passwordChangedAt: Date
+    mustChangePassword: boolean
     lastLoginAt: Date | null
+    lastLoginIp: string | null
     lastActiveAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -1238,7 +1552,14 @@ export interface UserFieldRefs {
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly tenantId: Prisma.FieldRef<"User", 'String'>
+  readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
+  readonly failedLoginAttempts: Prisma.FieldRef<"User", 'Int'>
+  readonly lockedUntil: Prisma.FieldRef<"User", 'DateTime'>
+  readonly lastFailedLoginAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly passwordChangedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly mustChangePassword: Prisma.FieldRef<"User", 'Boolean'>
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly lastLoginIp: Prisma.FieldRef<"User", 'String'>
   readonly lastActiveAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>

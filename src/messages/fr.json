@@ -22,7 +22,9 @@
     "email": "Email",
     "password": "Mot de passe",
     "loginButton": "Se connecter",
-    "invalidCredentials": "Identifiants invalides"
+    "invalidCredentials": "Identifiants invalides",
+    "accountDisabled": "Compte désactivé. Veuillez contacter l'administrateur.",
+    "accountLocked": "Compte verrouillé pour {minutes} minutes suite à trop d'échecs."
   },
   "dashboard": {
     "title": "Tableau de Bord",

@@ -553,10 +553,6 @@ export type FiscalYearUncheckedUpdateManyWithoutTenantNestedInput = {
   deleteMany?: Prisma.FiscalYearScalarWhereInput | Prisma.FiscalYearScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type FiscalYearCreateNestedOneWithoutMonthClosuresInput = {
   create?: Prisma.XOR<Prisma.FiscalYearCreateWithoutMonthClosuresInput, Prisma.FiscalYearUncheckedCreateWithoutMonthClosuresInput>
   connectOrCreate?: Prisma.FiscalYearCreateOrConnectWithoutMonthClosuresInput

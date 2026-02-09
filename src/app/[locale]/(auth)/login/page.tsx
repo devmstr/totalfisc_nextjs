@@ -28,7 +28,14 @@ export default function LoginPage() {
             });
 
             if (result?.error) {
-                setError(t('invalidCredentials'));
+                if (result.error === 'ACCOUNT_DISABLED') {
+                    setError(t('accountDisabled'));
+                } else if (result.error.startsWith('ACCOUNT_LOCKED')) {
+                    const minutes = result.error.split(':')[1];
+                    setError(t('accountLocked', { minutes }));
+                } else {
+                    setError(t('invalidCredentials'));
+                }
             } else {
                 router.push('/');
                 router.refresh();

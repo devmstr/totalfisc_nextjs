@@ -22,7 +22,9 @@
     "email": "البريد الإلكتروني",
     "password": "كلمة المرور",
     "loginButton": "دخول",
-    "invalidCredentials": "بيانات الاعتماد غير صالحة"
+    "invalidCredentials": "بيانات الاعتماد غير صالحة",
+    "accountDisabled": "الحساب معطل. يرجى الاتصال بالمسؤول.",
+    "accountLocked": "تم قفل الحساب لمدة {minutes} دقيقة بسبب محاولات فاشلة كثيرة."
   },
   "dashboard": {
     "title": "لوحة التحكم",

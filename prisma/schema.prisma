@@ -1,7 +1,7 @@
 // schema.prisma
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "./generated/prisma"
 }
 
@@ -70,9 +70,22 @@ model User {
   tenantId        String
   tenant          Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   
+  // Account status
+  isActive             Boolean   @default(true)
+  
+  // Security - Brute force protection
+  failedLoginAttempts  Int       @default(0)
+  lockedUntil          DateTime?
+  lastFailedLoginAt    DateTime?
+  
+  // Password management
+  passwordChangedAt    DateTime  @default(now())
+  mustChangePassword   Boolean   @default(false)
+  
   // Activity tracking
-  lastLoginAt     DateTime?
-  lastActiveAt    DateTime?
+  lastLoginAt          DateTime?
+  lastLoginIp          String?
+  lastActiveAt         DateTime?
   
   // Relationships
   activityLogs    ActivityLog[]
@@ -663,6 +676,11 @@ enum ActivityType {
   MONTH_CLOSED
   ACCOUNT_CREATED
   USER_LOGIN
+  USER_LOGIN_FAILED
+  USER_LOCKED
+  PASSWORD_RESET_REQUESTED
+  PASSWORD_RESET_COMPLETED
+  PERMISSION_DENIED
 }
 
 model ActivityLog {

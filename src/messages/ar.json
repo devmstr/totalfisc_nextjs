@@ -65,7 +65,18 @@
     "amount": "المبلغ",
     "piece": "المستند",
     "auxiliary": "الطرف الثالث",
-    "balanceError": "مجموع المدين يجب أن يساوي مجموع الدائن"
+    "balanceError": "مجموع المدين يجب أن يساوي مجموع الدائن",
+    "errors": {
+      "unbalanced": "القيد غير متوازن. الفرق: {diff}",
+      "chrono": "التاريخ لا يمكن أن يكون قبل آخر قيد ({number})",
+      "auxRequired": "الحساب {account} يتطلب طرفاً ثالثاً",
+      "accountNotFound": "الحساب {account} غير موجود"
+    },
+    "success": {
+      "created": "تم تسجيل القيد بنجاح",
+      "updated": "تم تعديل القيد بنجاح",
+      "deleted": "تم حذف القيد"
+    }
   },
   "invoicing": {
     "invoice": "فاتورة",

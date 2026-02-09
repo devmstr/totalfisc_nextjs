@@ -331,6 +331,7 @@ export type TenantWhereInput = {
   products?: Prisma.ProductListRelationFilter
   fiscalYears?: Prisma.FiscalYearListRelationFilter
   g50Declarations?: Prisma.G50DeclarationListRelationFilter
+  pieces?: Prisma.PieceListRelationFilter
 }
 
 export type TenantOrderByWithRelationInput = {
@@ -363,6 +364,7 @@ export type TenantOrderByWithRelationInput = {
   products?: Prisma.ProductOrderByRelationAggregateInput
   fiscalYears?: Prisma.FiscalYearOrderByRelationAggregateInput
   g50Declarations?: Prisma.G50DeclarationOrderByRelationAggregateInput
+  pieces?: Prisma.PieceOrderByRelationAggregateInput
 }
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -398,6 +400,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   products?: Prisma.ProductListRelationFilter
   fiscalYears?: Prisma.FiscalYearListRelationFilter
   g50Declarations?: Prisma.G50DeclarationListRelationFilter
+  pieces?: Prisma.PieceListRelationFilter
 }, "id" | "nif" | "nis">
 
 export type TenantOrderByWithAggregationInput = {
@@ -480,6 +483,7 @@ export type TenantCreateInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateInput = {
@@ -512,6 +516,7 @@ export type TenantUncheckedCreateInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUpdateInput = {
@@ -544,6 +549,7 @@ export type TenantUpdateInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateInput = {
@@ -576,6 +582,7 @@ export type TenantUncheckedUpdateInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateManyInput = {
@@ -807,6 +814,20 @@ export type TenantUpdateOneRequiredWithoutAuxiliariesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutAuxiliariesInput, Prisma.TenantUpdateWithoutAuxiliariesInput>, Prisma.TenantUncheckedUpdateWithoutAuxiliariesInput>
 }
 
+export type TenantCreateNestedOneWithoutPiecesInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutPiecesInput, Prisma.TenantUncheckedCreateWithoutPiecesInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutPiecesInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutPiecesNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutPiecesInput, Prisma.TenantUncheckedCreateWithoutPiecesInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutPiecesInput
+  upsert?: Prisma.TenantUpsertWithoutPiecesInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutPiecesInput, Prisma.TenantUpdateWithoutPiecesInput>, Prisma.TenantUncheckedUpdateWithoutPiecesInput>
+}
+
 export type TenantCreateNestedOneWithoutTransactionsInput = {
   create?: Prisma.XOR<Prisma.TenantCreateWithoutTransactionsInput, Prisma.TenantUncheckedCreateWithoutTransactionsInput>
   connectOrCreate?: Prisma.TenantCreateOrConnectWithoutTransactionsInput
@@ -920,6 +941,7 @@ export type TenantCreateWithoutUsersInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUsersInput = {
@@ -951,6 +973,7 @@ export type TenantUncheckedCreateWithoutUsersInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUsersInput = {
@@ -998,6 +1021,7 @@ export type TenantUpdateWithoutUsersInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUsersInput = {
@@ -1029,6 +1053,7 @@ export type TenantUncheckedUpdateWithoutUsersInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutFiscalYearsInput = {
@@ -1060,6 +1085,7 @@ export type TenantCreateWithoutFiscalYearsInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutFiscalYearsInput = {
@@ -1091,6 +1117,7 @@ export type TenantUncheckedCreateWithoutFiscalYearsInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutFiscalYearsInput = {
@@ -1138,6 +1165,7 @@ export type TenantUpdateWithoutFiscalYearsInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutFiscalYearsInput = {
@@ -1169,6 +1197,7 @@ export type TenantUncheckedUpdateWithoutFiscalYearsInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutJournalsInput = {
@@ -1200,6 +1229,7 @@ export type TenantCreateWithoutJournalsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutJournalsInput = {
@@ -1231,6 +1261,7 @@ export type TenantUncheckedCreateWithoutJournalsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutJournalsInput = {
@@ -1278,6 +1309,7 @@ export type TenantUpdateWithoutJournalsInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutJournalsInput = {
@@ -1309,6 +1341,7 @@ export type TenantUncheckedUpdateWithoutJournalsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutAccountsInput = {
@@ -1340,6 +1373,7 @@ export type TenantCreateWithoutAccountsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutAccountsInput = {
@@ -1371,6 +1405,7 @@ export type TenantUncheckedCreateWithoutAccountsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutAccountsInput = {
@@ -1418,6 +1453,7 @@ export type TenantUpdateWithoutAccountsInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutAccountsInput = {
@@ -1449,6 +1485,7 @@ export type TenantUncheckedUpdateWithoutAccountsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutAuxiliariesInput = {
@@ -1480,6 +1517,7 @@ export type TenantCreateWithoutAuxiliariesInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutAuxiliariesInput = {
@@ -1511,6 +1549,7 @@ export type TenantUncheckedCreateWithoutAuxiliariesInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutAuxiliariesInput = {
@@ -1558,6 +1597,7 @@ export type TenantUpdateWithoutAuxiliariesInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutAuxiliariesInput = {
@@ -1582,6 +1622,151 @@ export type TenantUncheckedUpdateWithoutAuxiliariesInput = {
   users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
   journals?: Prisma.JournalUncheckedUpdateManyWithoutTenantNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutTenantNestedInput
+  transactions?: Prisma.TransactionLineUncheckedUpdateManyWithoutTenantNestedInput
+  investments?: Prisma.InvestmentUncheckedUpdateManyWithoutTenantNestedInput
+  costCenters?: Prisma.CostCenterUncheckedUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
+  g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutPiecesInput = {
+  id?: string
+  companyName: string
+  legalForm?: string | null
+  fiscalYear: number
+  startDate: Date | string
+  endDate: Date | string
+  nif?: string | null
+  nis?: string | null
+  rc?: string | null
+  address?: string | null
+  city?: string | null
+  phone?: string | null
+  email?: string | null
+  logo?: string | null
+  currency?: string
+  language?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutTenantInput
+  journals?: Prisma.JournalCreateNestedManyWithoutTenantInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutTenantInput
+  auxiliaries?: Prisma.AuxiliaryCreateNestedManyWithoutTenantInput
+  transactions?: Prisma.TransactionLineCreateNestedManyWithoutTenantInput
+  investments?: Prisma.InvestmentCreateNestedManyWithoutTenantInput
+  costCenters?: Prisma.CostCenterCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
+  g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutPiecesInput = {
+  id?: string
+  companyName: string
+  legalForm?: string | null
+  fiscalYear: number
+  startDate: Date | string
+  endDate: Date | string
+  nif?: string | null
+  nis?: string | null
+  rc?: string | null
+  address?: string | null
+  city?: string | null
+  phone?: string | null
+  email?: string | null
+  logo?: string | null
+  currency?: string
+  language?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutTenantInput
+  journals?: Prisma.JournalUncheckedCreateNestedManyWithoutTenantInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutTenantInput
+  auxiliaries?: Prisma.AuxiliaryUncheckedCreateNestedManyWithoutTenantInput
+  transactions?: Prisma.TransactionLineUncheckedCreateNestedManyWithoutTenantInput
+  investments?: Prisma.InvestmentUncheckedCreateNestedManyWithoutTenantInput
+  costCenters?: Prisma.CostCenterUncheckedCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
+  g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutPiecesInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutPiecesInput, Prisma.TenantUncheckedCreateWithoutPiecesInput>
+}
+
+export type TenantUpsertWithoutPiecesInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutPiecesInput, Prisma.TenantUncheckedUpdateWithoutPiecesInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutPiecesInput, Prisma.TenantUncheckedCreateWithoutPiecesInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutPiecesInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutPiecesInput, Prisma.TenantUncheckedUpdateWithoutPiecesInput>
+}
+
+export type TenantUpdateWithoutPiecesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  legalForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYear?: Prisma.IntFieldUpdateOperationsInput | number
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nif?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutTenantNestedInput
+  journals?: Prisma.JournalUpdateManyWithoutTenantNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutTenantNestedInput
+  auxiliaries?: Prisma.AuxiliaryUpdateManyWithoutTenantNestedInput
+  transactions?: Prisma.TransactionLineUpdateManyWithoutTenantNestedInput
+  investments?: Prisma.InvestmentUpdateManyWithoutTenantNestedInput
+  costCenters?: Prisma.CostCenterUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
+  g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutPiecesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.StringFieldUpdateOperationsInput | string
+  legalForm?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fiscalYear?: Prisma.IntFieldUpdateOperationsInput | number
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nif?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  language?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutTenantNestedInput
+  journals?: Prisma.JournalUncheckedUpdateManyWithoutTenantNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutTenantNestedInput
+  auxiliaries?: Prisma.AuxiliaryUncheckedUpdateManyWithoutTenantNestedInput
   transactions?: Prisma.TransactionLineUncheckedUpdateManyWithoutTenantNestedInput
   investments?: Prisma.InvestmentUncheckedUpdateManyWithoutTenantNestedInput
   costCenters?: Prisma.CostCenterUncheckedUpdateManyWithoutTenantNestedInput
@@ -1620,6 +1805,7 @@ export type TenantCreateWithoutTransactionsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutTransactionsInput = {
@@ -1651,6 +1837,7 @@ export type TenantUncheckedCreateWithoutTransactionsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutTransactionsInput = {
@@ -1698,6 +1885,7 @@ export type TenantUpdateWithoutTransactionsInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutTransactionsInput = {
@@ -1729,6 +1917,7 @@ export type TenantUncheckedUpdateWithoutTransactionsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutInvestmentsInput = {
@@ -1760,6 +1949,7 @@ export type TenantCreateWithoutInvestmentsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutInvestmentsInput = {
@@ -1791,6 +1981,7 @@ export type TenantUncheckedCreateWithoutInvestmentsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutInvestmentsInput = {
@@ -1838,6 +2029,7 @@ export type TenantUpdateWithoutInvestmentsInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutInvestmentsInput = {
@@ -1869,6 +2061,7 @@ export type TenantUncheckedUpdateWithoutInvestmentsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutCostCentersInput = {
@@ -1900,6 +2093,7 @@ export type TenantCreateWithoutCostCentersInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCostCentersInput = {
@@ -1931,6 +2125,7 @@ export type TenantUncheckedCreateWithoutCostCentersInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCostCentersInput = {
@@ -1978,6 +2173,7 @@ export type TenantUpdateWithoutCostCentersInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCostCentersInput = {
@@ -2009,6 +2205,7 @@ export type TenantUncheckedUpdateWithoutCostCentersInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutInvoicesInput = {
@@ -2040,6 +2237,7 @@ export type TenantCreateWithoutInvoicesInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutInvoicesInput = {
@@ -2071,6 +2269,7 @@ export type TenantUncheckedCreateWithoutInvoicesInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutInvoicesInput = {
@@ -2118,6 +2317,7 @@ export type TenantUpdateWithoutInvoicesInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutInvoicesInput = {
@@ -2149,6 +2349,7 @@ export type TenantUncheckedUpdateWithoutInvoicesInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutProductsInput = {
@@ -2180,6 +2381,7 @@ export type TenantCreateWithoutProductsInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutProductsInput = {
@@ -2211,6 +2413,7 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
   g50Declarations?: Prisma.G50DeclarationUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutProductsInput = {
@@ -2258,6 +2461,7 @@ export type TenantUpdateWithoutProductsInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutProductsInput = {
@@ -2289,6 +2493,7 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
   g50Declarations?: Prisma.G50DeclarationUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantCreateWithoutG50DeclarationsInput = {
@@ -2320,6 +2525,7 @@ export type TenantCreateWithoutG50DeclarationsInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceCreateNestedManyWithoutTenantInput
 }
 
 export type TenantUncheckedCreateWithoutG50DeclarationsInput = {
@@ -2351,6 +2557,7 @@ export type TenantUncheckedCreateWithoutG50DeclarationsInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   fiscalYears?: Prisma.FiscalYearUncheckedCreateNestedManyWithoutTenantInput
+  pieces?: Prisma.PieceUncheckedCreateNestedManyWithoutTenantInput
 }
 
 export type TenantCreateOrConnectWithoutG50DeclarationsInput = {
@@ -2398,6 +2605,7 @@ export type TenantUpdateWithoutG50DeclarationsInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUpdateManyWithoutTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutG50DeclarationsInput = {
@@ -2429,6 +2637,7 @@ export type TenantUncheckedUpdateWithoutG50DeclarationsInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   fiscalYears?: Prisma.FiscalYearUncheckedUpdateManyWithoutTenantNestedInput
+  pieces?: Prisma.PieceUncheckedUpdateManyWithoutTenantNestedInput
 }
 
 
@@ -2448,6 +2657,7 @@ export type TenantCountOutputType = {
   products: number
   fiscalYears: number
   g50Declarations: number
+  pieces: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2462,6 +2672,7 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   products?: boolean | TenantCountOutputTypeCountProductsArgs
   fiscalYears?: boolean | TenantCountOutputTypeCountFiscalYearsArgs
   g50Declarations?: boolean | TenantCountOutputTypeCountG50DeclarationsArgs
+  pieces?: boolean | TenantCountOutputTypeCountPiecesArgs
 }
 
 /**
@@ -2551,6 +2762,13 @@ export type TenantCountOutputTypeCountG50DeclarationsArgs<ExtArgs extends runtim
   where?: Prisma.G50DeclarationWhereInput
 }
 
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountPiecesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PieceWhereInput
+}
+
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2582,6 +2800,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   products?: boolean | Prisma.Tenant$productsArgs<ExtArgs>
   fiscalYears?: boolean | Prisma.Tenant$fiscalYearsArgs<ExtArgs>
   g50Declarations?: boolean | Prisma.Tenant$g50DeclarationsArgs<ExtArgs>
+  pieces?: boolean | Prisma.Tenant$piecesArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
 
@@ -2661,6 +2880,7 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   products?: boolean | Prisma.Tenant$productsArgs<ExtArgs>
   fiscalYears?: boolean | Prisma.Tenant$fiscalYearsArgs<ExtArgs>
   g50Declarations?: boolean | Prisma.Tenant$g50DeclarationsArgs<ExtArgs>
+  pieces?: boolean | Prisma.Tenant$piecesArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TenantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2680,6 +2900,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     products: Prisma.$ProductPayload<ExtArgs>[]
     fiscalYears: Prisma.$FiscalYearPayload<ExtArgs>[]
     g50Declarations: Prisma.$G50DeclarationPayload<ExtArgs>[]
+    pieces: Prisma.$PiecePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3105,6 +3326,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   products<T extends Prisma.Tenant$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   fiscalYears<T extends Prisma.Tenant$fiscalYearsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$fiscalYearsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FiscalYearPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   g50Declarations<T extends Prisma.Tenant$g50DeclarationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$g50DeclarationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$G50DeclarationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pieces<T extends Prisma.Tenant$piecesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$piecesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PiecePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3801,6 +4023,30 @@ export type Tenant$g50DeclarationsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.G50DeclarationScalarFieldEnum | Prisma.G50DeclarationScalarFieldEnum[]
+}
+
+/**
+ * Tenant.pieces
+ */
+export type Tenant$piecesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Piece
+   */
+  select?: Prisma.PieceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Piece
+   */
+  omit?: Prisma.PieceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PieceInclude<ExtArgs> | null
+  where?: Prisma.PieceWhereInput
+  orderBy?: Prisma.PieceOrderByWithRelationInput | Prisma.PieceOrderByWithRelationInput[]
+  cursor?: Prisma.PieceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PieceScalarFieldEnum | Prisma.PieceScalarFieldEnum[]
 }
 
 /**

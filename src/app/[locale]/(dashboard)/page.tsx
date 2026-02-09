@@ -4,18 +4,23 @@ import { redirect } from "@/i18n/navigation";
 import prisma from "@/lib/prisma";
 import { getTranslations } from 'next-intl/server';
 import LanguageSwitcher from "@/components/ui/language-switcher";
+import { Session } from "next-auth";
 
-export default async function DashboardPage() {
-    const session = await getServerSession(authOptions);
+export default async function DashboardPage({
+    params
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+    const session: Session | null = await getServerSession(authOptions);
     const t = await getTranslations('dashboard');
-    const tNav = await getTranslations('navigation');
 
     if (!session) {
-        redirect("/login");
+        redirect({ href: '/login', locale: locale });
     }
 
     const tenant = await prisma.tenant.findUnique({
-        where: { id: session.user.tenantId },
+        where: { id: session?.user.tenantId },
     });
 
     const stats = [
@@ -40,7 +45,7 @@ export default async function DashboardPage() {
                         {t('title')}
                     </h1>
                     <p className="text-zinc-600 dark:text-zinc-400">
-                        {t('welcome', { name: session.user.name })} ({tenant?.companyName})
+                        {t('welcome', { name: session?.user.name ?? '' })} ({tenant?.companyName || ''})
                     </p>
                 </div>
                 <LanguageSwitcher />

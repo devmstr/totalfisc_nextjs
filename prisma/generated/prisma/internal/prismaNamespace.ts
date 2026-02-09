@@ -2001,6 +2001,7 @@ export const PieceScalarFieldEnum = {
   journalId: 'journalId',
   isValidated: 'isValidated',
   validatedAt: 'validatedAt',
+  tenantId: 'tenantId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

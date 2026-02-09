@@ -32,6 +32,7 @@ export type PieceMinAggregateOutputType = {
   journalId: string | null
   isValidated: boolean | null
   validatedAt: Date | null
+  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,6 +45,7 @@ export type PieceMaxAggregateOutputType = {
   journalId: string | null
   isValidated: boolean | null
   validatedAt: Date | null
+  tenantId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +58,7 @@ export type PieceCountAggregateOutputType = {
   journalId: number
   isValidated: number
   validatedAt: number
+  tenantId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,6 +73,7 @@ export type PieceMinAggregateInputType = {
   journalId?: true
   isValidated?: true
   validatedAt?: true
+  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +86,7 @@ export type PieceMaxAggregateInputType = {
   journalId?: true
   isValidated?: true
   validatedAt?: true
+  tenantId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +99,7 @@ export type PieceCountAggregateInputType = {
   journalId?: true
   isValidated?: true
   validatedAt?: true
+  tenantId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -179,6 +185,7 @@ export type PieceGroupByOutputType = {
   journalId: string
   isValidated: boolean
   validatedAt: Date | null
+  tenantId: string
   createdAt: Date
   updatedAt: Date
   _count: PieceCountAggregateOutputType | null
@@ -212,10 +219,12 @@ export type PieceWhereInput = {
   journalId?: Prisma.StringFilter<"Piece"> | string
   isValidated?: Prisma.BoolFilter<"Piece"> | boolean
   validatedAt?: Prisma.DateTimeNullableFilter<"Piece"> | Date | string | null
+  tenantId?: Prisma.StringFilter<"Piece"> | string
   createdAt?: Prisma.DateTimeFilter<"Piece"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Piece"> | Date | string
   journal?: Prisma.XOR<Prisma.JournalScalarRelationFilter, Prisma.JournalWhereInput>
   lines?: Prisma.TransactionLineListRelationFilter
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
 
 export type PieceOrderByWithRelationInput = {
@@ -226,10 +235,12 @@ export type PieceOrderByWithRelationInput = {
   journalId?: Prisma.SortOrder
   isValidated?: Prisma.SortOrder
   validatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   journal?: Prisma.JournalOrderByWithRelationInput
   lines?: Prisma.TransactionLineOrderByRelationAggregateInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type PieceWhereUniqueInput = Prisma.AtLeast<{
@@ -244,10 +255,12 @@ export type PieceWhereUniqueInput = Prisma.AtLeast<{
   journalId?: Prisma.StringFilter<"Piece"> | string
   isValidated?: Prisma.BoolFilter<"Piece"> | boolean
   validatedAt?: Prisma.DateTimeNullableFilter<"Piece"> | Date | string | null
+  tenantId?: Prisma.StringFilter<"Piece"> | string
   createdAt?: Prisma.DateTimeFilter<"Piece"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Piece"> | Date | string
   journal?: Prisma.XOR<Prisma.JournalScalarRelationFilter, Prisma.JournalWhereInput>
   lines?: Prisma.TransactionLineListRelationFilter
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }, "id" | "journalId_pieceNumber">
 
 export type PieceOrderByWithAggregationInput = {
@@ -258,6 +271,7 @@ export type PieceOrderByWithAggregationInput = {
   journalId?: Prisma.SortOrder
   isValidated?: Prisma.SortOrder
   validatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PieceCountOrderByAggregateInput
@@ -276,6 +290,7 @@ export type PieceScalarWhereWithAggregatesInput = {
   journalId?: Prisma.StringWithAggregatesFilter<"Piece"> | string
   isValidated?: Prisma.BoolWithAggregatesFilter<"Piece"> | boolean
   validatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Piece"> | Date | string | null
+  tenantId?: Prisma.StringWithAggregatesFilter<"Piece"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Piece"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Piece"> | Date | string
 }
@@ -291,6 +306,7 @@ export type PieceCreateInput = {
   updatedAt?: Date | string
   journal: Prisma.JournalCreateNestedOneWithoutPiecesInput
   lines?: Prisma.TransactionLineCreateNestedManyWithoutPieceInput
+  tenant: Prisma.TenantCreateNestedOneWithoutPiecesInput
 }
 
 export type PieceUncheckedCreateInput = {
@@ -301,6 +317,7 @@ export type PieceUncheckedCreateInput = {
   journalId: string
   isValidated?: boolean
   validatedAt?: Date | string | null
+  tenantId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   lines?: Prisma.TransactionLineUncheckedCreateNestedManyWithoutPieceInput
@@ -317,6 +334,7 @@ export type PieceUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   journal?: Prisma.JournalUpdateOneRequiredWithoutPiecesNestedInput
   lines?: Prisma.TransactionLineUpdateManyWithoutPieceNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutPiecesNestedInput
 }
 
 export type PieceUncheckedUpdateInput = {
@@ -327,6 +345,7 @@ export type PieceUncheckedUpdateInput = {
   journalId?: Prisma.StringFieldUpdateOperationsInput | string
   isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lines?: Prisma.TransactionLineUncheckedUpdateManyWithoutPieceNestedInput
@@ -340,6 +359,7 @@ export type PieceCreateManyInput = {
   journalId: string
   isValidated?: boolean
   validatedAt?: Date | string | null
+  tenantId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -363,6 +383,7 @@ export type PieceUncheckedUpdateManyInput = {
   journalId?: Prisma.StringFieldUpdateOperationsInput | string
   isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -390,6 +411,7 @@ export type PieceCountOrderByAggregateInput = {
   journalId?: Prisma.SortOrder
   isValidated?: Prisma.SortOrder
   validatedAt?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -402,6 +424,7 @@ export type PieceMaxOrderByAggregateInput = {
   journalId?: Prisma.SortOrder
   isValidated?: Prisma.SortOrder
   validatedAt?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -414,6 +437,7 @@ export type PieceMinOrderByAggregateInput = {
   journalId?: Prisma.SortOrder
   isValidated?: Prisma.SortOrder
   validatedAt?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -421,6 +445,48 @@ export type PieceMinOrderByAggregateInput = {
 export type PieceScalarRelationFilter = {
   is?: Prisma.PieceWhereInput
   isNot?: Prisma.PieceWhereInput
+}
+
+export type PieceCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.PieceCreateWithoutTenantInput, Prisma.PieceUncheckedCreateWithoutTenantInput> | Prisma.PieceCreateWithoutTenantInput[] | Prisma.PieceUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.PieceCreateOrConnectWithoutTenantInput | Prisma.PieceCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.PieceCreateManyTenantInputEnvelope
+  connect?: Prisma.PieceWhereUniqueInput | Prisma.PieceWhereUniqueInput[]
+}
+
+export type PieceUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.PieceCreateWithoutTenantInput, Prisma.PieceUncheckedCreateWithoutTenantInput> | Prisma.PieceCreateWithoutTenantInput[] | Prisma.PieceUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.PieceCreateOrConnectWithoutTenantInput | Prisma.PieceCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.PieceCreateManyTenantInputEnvelope
+  connect?: Prisma.PieceWhereUniqueInput | Prisma.PieceWhereUniqueInput[]
+}
+
+export type PieceUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.PieceCreateWithoutTenantInput, Prisma.PieceUncheckedCreateWithoutTenantInput> | Prisma.PieceCreateWithoutTenantInput[] | Prisma.PieceUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.PieceCreateOrConnectWithoutTenantInput | Prisma.PieceCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.PieceUpsertWithWhereUniqueWithoutTenantInput | Prisma.PieceUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.PieceCreateManyTenantInputEnvelope
+  set?: Prisma.PieceWhereUniqueInput | Prisma.PieceWhereUniqueInput[]
+  disconnect?: Prisma.PieceWhereUniqueInput | Prisma.PieceWhereUniqueInput[]
+  delete?: Prisma.PieceWhereUniqueInput | Prisma.PieceWhereUniqueInput[]
+  connect?: Prisma.PieceWhereUniqueInput | Prisma.PieceWhereUniqueInput[]
+  update?: Prisma.PieceUpdateWithWhereUniqueWithoutTenantInput | Prisma.PieceUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.PieceUpdateManyWithWhereWithoutTenantInput | Prisma.PieceUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.PieceScalarWhereInput | Prisma.PieceScalarWhereInput[]
+}
+
+export type PieceUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.PieceCreateWithoutTenantInput, Prisma.PieceUncheckedCreateWithoutTenantInput> | Prisma.PieceCreateWithoutTenantInput[] | Prisma.PieceUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.PieceCreateOrConnectWithoutTenantInput | Prisma.PieceCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.PieceUpsertWithWhereUniqueWithoutTenantInput | Prisma.PieceUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.PieceCreateManyTenantInputEnvelope
+  set?: Prisma.PieceWhereUniqueInput | Prisma.PieceWhereUniqueInput[]
+  disconnect?: Prisma.PieceWhereUniqueInput | Prisma.PieceWhereUniqueInput[]
+  delete?: Prisma.PieceWhereUniqueInput | Prisma.PieceWhereUniqueInput[]
+  connect?: Prisma.PieceWhereUniqueInput | Prisma.PieceWhereUniqueInput[]
+  update?: Prisma.PieceUpdateWithWhereUniqueWithoutTenantInput | Prisma.PieceUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.PieceUpdateManyWithWhereWithoutTenantInput | Prisma.PieceUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.PieceScalarWhereInput | Prisma.PieceScalarWhereInput[]
 }
 
 export type PieceCreateNestedManyWithoutJournalInput = {
@@ -479,6 +545,74 @@ export type PieceUpdateOneRequiredWithoutLinesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PieceUpdateToOneWithWhereWithoutLinesInput, Prisma.PieceUpdateWithoutLinesInput>, Prisma.PieceUncheckedUpdateWithoutLinesInput>
 }
 
+export type PieceCreateWithoutTenantInput = {
+  id?: string
+  pieceNumber: string
+  date: Date | string
+  reference?: string | null
+  isValidated?: boolean
+  validatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  journal: Prisma.JournalCreateNestedOneWithoutPiecesInput
+  lines?: Prisma.TransactionLineCreateNestedManyWithoutPieceInput
+}
+
+export type PieceUncheckedCreateWithoutTenantInput = {
+  id?: string
+  pieceNumber: string
+  date: Date | string
+  reference?: string | null
+  journalId: string
+  isValidated?: boolean
+  validatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lines?: Prisma.TransactionLineUncheckedCreateNestedManyWithoutPieceInput
+}
+
+export type PieceCreateOrConnectWithoutTenantInput = {
+  where: Prisma.PieceWhereUniqueInput
+  create: Prisma.XOR<Prisma.PieceCreateWithoutTenantInput, Prisma.PieceUncheckedCreateWithoutTenantInput>
+}
+
+export type PieceCreateManyTenantInputEnvelope = {
+  data: Prisma.PieceCreateManyTenantInput | Prisma.PieceCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type PieceUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.PieceWhereUniqueInput
+  update: Prisma.XOR<Prisma.PieceUpdateWithoutTenantInput, Prisma.PieceUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.PieceCreateWithoutTenantInput, Prisma.PieceUncheckedCreateWithoutTenantInput>
+}
+
+export type PieceUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.PieceWhereUniqueInput
+  data: Prisma.XOR<Prisma.PieceUpdateWithoutTenantInput, Prisma.PieceUncheckedUpdateWithoutTenantInput>
+}
+
+export type PieceUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.PieceScalarWhereInput
+  data: Prisma.XOR<Prisma.PieceUpdateManyMutationInput, Prisma.PieceUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type PieceScalarWhereInput = {
+  AND?: Prisma.PieceScalarWhereInput | Prisma.PieceScalarWhereInput[]
+  OR?: Prisma.PieceScalarWhereInput[]
+  NOT?: Prisma.PieceScalarWhereInput | Prisma.PieceScalarWhereInput[]
+  id?: Prisma.StringFilter<"Piece"> | string
+  pieceNumber?: Prisma.StringFilter<"Piece"> | string
+  date?: Prisma.DateTimeFilter<"Piece"> | Date | string
+  reference?: Prisma.StringNullableFilter<"Piece"> | string | null
+  journalId?: Prisma.StringFilter<"Piece"> | string
+  isValidated?: Prisma.BoolFilter<"Piece"> | boolean
+  validatedAt?: Prisma.DateTimeNullableFilter<"Piece"> | Date | string | null
+  tenantId?: Prisma.StringFilter<"Piece"> | string
+  createdAt?: Prisma.DateTimeFilter<"Piece"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Piece"> | Date | string
+}
+
 export type PieceCreateWithoutJournalInput = {
   id?: string
   pieceNumber: string
@@ -489,6 +623,7 @@ export type PieceCreateWithoutJournalInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lines?: Prisma.TransactionLineCreateNestedManyWithoutPieceInput
+  tenant: Prisma.TenantCreateNestedOneWithoutPiecesInput
 }
 
 export type PieceUncheckedCreateWithoutJournalInput = {
@@ -498,6 +633,7 @@ export type PieceUncheckedCreateWithoutJournalInput = {
   reference?: string | null
   isValidated?: boolean
   validatedAt?: Date | string | null
+  tenantId: string
   createdAt?: Date | string
   updatedAt?: Date | string
   lines?: Prisma.TransactionLineUncheckedCreateNestedManyWithoutPieceInput
@@ -529,21 +665,6 @@ export type PieceUpdateManyWithWhereWithoutJournalInput = {
   data: Prisma.XOR<Prisma.PieceUpdateManyMutationInput, Prisma.PieceUncheckedUpdateManyWithoutJournalInput>
 }
 
-export type PieceScalarWhereInput = {
-  AND?: Prisma.PieceScalarWhereInput | Prisma.PieceScalarWhereInput[]
-  OR?: Prisma.PieceScalarWhereInput[]
-  NOT?: Prisma.PieceScalarWhereInput | Prisma.PieceScalarWhereInput[]
-  id?: Prisma.StringFilter<"Piece"> | string
-  pieceNumber?: Prisma.StringFilter<"Piece"> | string
-  date?: Prisma.DateTimeFilter<"Piece"> | Date | string
-  reference?: Prisma.StringNullableFilter<"Piece"> | string | null
-  journalId?: Prisma.StringFilter<"Piece"> | string
-  isValidated?: Prisma.BoolFilter<"Piece"> | boolean
-  validatedAt?: Prisma.DateTimeNullableFilter<"Piece"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"Piece"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Piece"> | Date | string
-}
-
 export type PieceCreateWithoutLinesInput = {
   id?: string
   pieceNumber: string
@@ -554,6 +675,7 @@ export type PieceCreateWithoutLinesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   journal: Prisma.JournalCreateNestedOneWithoutPiecesInput
+  tenant: Prisma.TenantCreateNestedOneWithoutPiecesInput
 }
 
 export type PieceUncheckedCreateWithoutLinesInput = {
@@ -564,6 +686,7 @@ export type PieceUncheckedCreateWithoutLinesInput = {
   journalId: string
   isValidated?: boolean
   validatedAt?: Date | string | null
+  tenantId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -594,9 +717,61 @@ export type PieceUpdateWithoutLinesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   journal?: Prisma.JournalUpdateOneRequiredWithoutPiecesNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutPiecesNestedInput
 }
 
 export type PieceUncheckedUpdateWithoutLinesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pieceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  journalId?: Prisma.StringFieldUpdateOperationsInput | string
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PieceCreateManyTenantInput = {
+  id?: string
+  pieceNumber: string
+  date: Date | string
+  reference?: string | null
+  journalId: string
+  isValidated?: boolean
+  validatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PieceUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pieceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  journal?: Prisma.JournalUpdateOneRequiredWithoutPiecesNestedInput
+  lines?: Prisma.TransactionLineUpdateManyWithoutPieceNestedInput
+}
+
+export type PieceUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pieceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  journalId?: Prisma.StringFieldUpdateOperationsInput | string
+  isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lines?: Prisma.TransactionLineUncheckedUpdateManyWithoutPieceNestedInput
+}
+
+export type PieceUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   pieceNumber?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -615,6 +790,7 @@ export type PieceCreateManyJournalInput = {
   reference?: string | null
   isValidated?: boolean
   validatedAt?: Date | string | null
+  tenantId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -629,6 +805,7 @@ export type PieceUpdateWithoutJournalInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lines?: Prisma.TransactionLineUpdateManyWithoutPieceNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutPiecesNestedInput
 }
 
 export type PieceUncheckedUpdateWithoutJournalInput = {
@@ -638,6 +815,7 @@ export type PieceUncheckedUpdateWithoutJournalInput = {
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lines?: Prisma.TransactionLineUncheckedUpdateManyWithoutPieceNestedInput
@@ -650,6 +828,7 @@ export type PieceUncheckedUpdateManyWithoutJournalInput = {
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isValidated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -693,10 +872,12 @@ export type PieceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   journalId?: boolean
   isValidated?: boolean
   validatedAt?: boolean
+  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   journal?: boolean | Prisma.JournalDefaultArgs<ExtArgs>
   lines?: boolean | Prisma.Piece$linesArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.PieceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["piece"]>
 
@@ -708,9 +889,11 @@ export type PieceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   journalId?: boolean
   isValidated?: boolean
   validatedAt?: boolean
+  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   journal?: boolean | Prisma.JournalDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["piece"]>
 
 export type PieceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -721,9 +904,11 @@ export type PieceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   journalId?: boolean
   isValidated?: boolean
   validatedAt?: boolean
+  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   journal?: boolean | Prisma.JournalDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["piece"]>
 
 export type PieceSelectScalar = {
@@ -734,21 +919,25 @@ export type PieceSelectScalar = {
   journalId?: boolean
   isValidated?: boolean
   validatedAt?: boolean
+  tenantId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PieceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pieceNumber" | "date" | "reference" | "journalId" | "isValidated" | "validatedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["piece"]>
+export type PieceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pieceNumber" | "date" | "reference" | "journalId" | "isValidated" | "validatedAt" | "tenantId" | "createdAt" | "updatedAt", ExtArgs["result"]["piece"]>
 export type PieceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   journal?: boolean | Prisma.JournalDefaultArgs<ExtArgs>
   lines?: boolean | Prisma.Piece$linesArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.PieceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PieceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   journal?: boolean | Prisma.JournalDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 export type PieceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   journal?: boolean | Prisma.JournalDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 
 export type $PiecePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -756,6 +945,7 @@ export type $PiecePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     journal: Prisma.$JournalPayload<ExtArgs>
     lines: Prisma.$TransactionLinePayload<ExtArgs>[]
+    tenant: Prisma.$TenantPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -765,6 +955,7 @@ export type $PiecePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     journalId: string
     isValidated: boolean
     validatedAt: Date | null
+    tenantId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["piece"]>
@@ -1163,6 +1354,7 @@ export interface Prisma__PieceClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   journal<T extends Prisma.JournalDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JournalDefaultArgs<ExtArgs>>): Prisma.Prisma__JournalClient<runtime.Types.Result.GetResult<Prisma.$JournalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   lines<T extends Prisma.Piece$linesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Piece$linesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1199,6 +1391,7 @@ export interface PieceFieldRefs {
   readonly journalId: Prisma.FieldRef<"Piece", 'String'>
   readonly isValidated: Prisma.FieldRef<"Piece", 'Boolean'>
   readonly validatedAt: Prisma.FieldRef<"Piece", 'DateTime'>
+  readonly tenantId: Prisma.FieldRef<"Piece", 'String'>
   readonly createdAt: Prisma.FieldRef<"Piece", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Piece", 'DateTime'>
 }

@@ -65,7 +65,18 @@
     "amount": "Montant",
     "piece": "Pièce",
     "auxiliary": "Tiers",
-    "balanceError": "Le total des débits doit être égal au total des crédits"
+    "balanceError": "Le total des débits doit être égal au total des crédits",
+    "errors": {
+      "unbalanced": "L'écriture n'est pas équilibrée. Différence : {diff}",
+      "chrono": "La date ne peut pas être antérieure à la dernière écriture ({number})",
+      "auxRequired": "Le compte {account} nécessite un tiers",
+      "accountNotFound": "Compte {account} non trouvé"
+    },
+    "success": {
+      "created": "Écriture enregistrée avec succès",
+      "updated": "Écriture modifiée avec succès",
+      "deleted": "Écriture supprimée"
+    }
   },
   "invoicing": {
     "invoice": "Facture",

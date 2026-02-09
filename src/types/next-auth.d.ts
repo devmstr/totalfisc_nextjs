@@ -1,27 +1,30 @@
-import { DefaultSession } from "next-auth";
-import { UserRole } from "../../prisma/generated/prisma/client";
+import { DefaultSession } from 'next-auth'
+import { UserRole } from '../../prisma/generated/prisma/client'
 
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session {
     user: {
-      id: string;
-      role: UserRole;
-      tenantId: string;
-      mustChangePassword: boolean;
-    } & DefaultSession["user"];
+      id: string
+      role: UserRole
+      tenantId: string
+      organizationId: string | null
+      mustChangePassword: boolean
+    } & DefaultSession['user']
   }
 
   interface User {
-    role: UserRole;
-    tenantId: string;
-    mustChangePassword: boolean;
+    role: UserRole
+    tenantId: string
+    organizationId: string | null
+    mustChangePassword: boolean
   }
 }
 
-declare module "next-auth/jwt" {
+declare module 'next-auth/jwt' {
   interface JWT {
-    role: UserRole;
-    tenantId: string;
-    mustChangePassword: boolean;
+    role: UserRole
+    tenantId: string
+    organizationId: string | null
+    mustChangePassword: boolean
   }
 }

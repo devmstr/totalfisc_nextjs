@@ -1,63 +1,70 @@
-import { NextAuthOptions } from 'next-auth';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import prisma from '@/lib/prisma';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcrypt';
-import { checkAccountLockout, recordFailedLogin, clearFailedAttempts } from '@/lib/auth/lockout';
+import { NextAuthOptions } from 'next-auth'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import prisma from '@/lib/prisma'
+import CredentialsProvider from 'next-auth/providers/credentials'
+import bcrypt from 'bcrypt'
+import {
+  checkAccountLockout,
+  recordFailedLogin,
+  clearFailedAttempts
+} from '@/lib/auth/lockout'
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma as any) as any,
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt'
   },
   pages: {
-    signIn: '/login',
+    signIn: '/login'
   },
   providers: [
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        if (!credentials?.email || !credentials?.password) return null
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email }
-        });
+        })
 
-        if (!user) return null;
+        if (!user) return null
 
         // Check if account is active
         if (!user.isActive) {
-          throw new Error('ACCOUNT_DISABLED');
+          throw new Error('ACCOUNT_DISABLED')
         }
 
         // Check for account lockout
-        const lockout = await checkAccountLockout(user.id);
+        const lockout = await checkAccountLockout(user.id)
         if (lockout.locked) {
-          throw new Error(`ACCOUNT_LOCKED:${lockout.remainingMinutes}`);
+          throw new Error(`ACCOUNT_LOCKED:${lockout.remainingMinutes}`)
         }
 
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        )
 
         if (!isValid) {
-          await recordFailedLogin(user.id);
-          return null;
+          await recordFailedLogin(user.id)
+          return null
         }
 
         // Clear failed attempts on successful login
-        await clearFailedAttempts(user.id);
+        await clearFailedAttempts(user.id)
 
         // Update last login
         await prisma.user.update({
           where: { id: user.id },
-          data: { 
-            lastLoginAt: new Date(),
+          data: {
+            lastLoginAt: new Date()
             // lastLoginIp would be nice here but we need req object which isn't directly available in authorize in this version of next-auth easily
           }
-        });
+        })
 
         return {
           id: user.id,
@@ -65,28 +72,35 @@ export const authOptions: NextAuthOptions = {
           name: user.name,
           role: user.role,
           tenantId: user.tenantId,
-          mustChangePassword: user.mustChangePassword,
-        };
+          organizationId: user.organizationId,
+          mustChangePassword: user.mustChangePassword
+        }
       }
-    }),
+    })
   ],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role;
-        token.tenantId = user.tenantId;
-        token.mustChangePassword = user.mustChangePassword;
+        token.role = user.role
+        token.tenantId = user.tenantId
+        token.organizationId = user.organizationId
+        token.mustChangePassword = user.mustChangePassword
       }
-      return token;
+      return token
     },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.sub!;
-        session.user.role = token.role;
-        session.user.tenantId = token.tenantId;
-        session.user.mustChangePassword = token.mustChangePassword;
+        session.user.id = token.sub!
+        session.user.role = token.role as any
+        session.user.tenantId = token.tenantId as string
+        session.user.organizationId = token.organizationId as string
+        session.user.mustChangePassword = token.mustChangePassword as boolean
       }
-      return session;
-    },
-  },
-};
+      return session
+    }
+  }
+}
+
+import { getServerSession } from 'next-auth'
+
+export const auth = () => getServerSession(authOptions)

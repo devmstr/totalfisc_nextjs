@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 import { checkAccountLockout, recordFailedLogin, clearFailedAttempts } from '@/lib/auth/lockout';
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma) as any,
+  adapter: PrismaAdapter(prisma as any) as any,
   session: {
     strategy: 'jwt',
   },
@@ -73,18 +73,18 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as any).role;
-        token.tenantId = (user as any).tenantId;
-        token.mustChangePassword = (user as any).mustChangePassword;
+        token.role = user.role;
+        token.tenantId = user.tenantId;
+        token.mustChangePassword = user.mustChangePassword;
       }
       return token;
     },
     async session({ session, token }) {
       if (token && session.user) {
-        (session.user as any).id = token.sub;
-        (session.user as any).role = token.role;
-        (session.user as any).tenantId = token.tenantId;
-        (session.user as any).mustChangePassword = token.mustChangePassword;
+        session.user.id = token.sub!;
+        session.user.role = token.role;
+        session.user.tenantId = token.tenantId;
+        session.user.mustChangePassword = token.mustChangePassword;
       }
       return session;
     },
